@@ -10,7 +10,7 @@ square_size = 2.0      # 正方形の1辺のサイズ[cm]
 pattern_size = (7, 7)  # 交差ポイントの数
 
 # reference_img = 40 # 参照画像の枚数
-num_file = 100 #キャリブレーション用画像の枚数
+num_file = 1 #キャリブレーション用画像の枚数
 
 pattern_points = np.zeros( (np.prod(pattern_size), 3), np.float32 ) #チェスボード（X,Y,Z）座標の指定 (Z=0)
 pattern_points[:,:2] = np.indices(pattern_size).T.reshape(-1, 2)
@@ -22,11 +22,11 @@ imgpoints = []
 
 # while len(objpoints) < reference_img:
 i = 0
-while num_file:
+while i < num_file:
     num = '{0:03d}'.format(i)
     print(num)
-# 画像の取得
-    img = cv2.imread("./Chessboerds/" + num +  ".png")
+    # 画像の取得
+    img = cv2.imread("./Chessboards/" + num +  ".JPG")
     height = img.shape[0]
     width = img.shape[1]
 
@@ -42,11 +42,14 @@ while num_file:
         cv2.cornerSubPix(gray, corner, (5,5), (-1,-1), term)
         imgpoints.append(corner.reshape(-1, 2))   #appendメソッド：リストの最後に因数のオブジェクトを追加
         objpoints.append(pattern_points)
+    else:
+        pass
+
     i += 1
-    # cv2.imshow('image', img)
-    # 毎回判定するから 200 ms 待つ．遅延するのはココ
-    if cv2.waitKey(200) & 0xFF == ord('q'):
-        break
+    # # cv2.imshow('image', img)
+    # # 毎回判定するから 200 ms 待つ．遅延するのはココ
+    # if cv2.waitKey(0) & 0xFF == ord('q'):
+    #     break
 
 print("calculating camera parameter...")
 # 内部パラメータを計算
