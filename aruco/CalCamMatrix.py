@@ -13,7 +13,9 @@ pattern_size = (7, 7)  # 交差ポイントの数
 #キャリブレーション用画像の枚数を数える
 dir = "./Chessboards"
 num_file = sum(os.path.isfile(os.path.join(dir, name)) for name in os.listdir(dir))
-print("キャリブレーション用画像は"+num_file+"枚")
+print(num_file)
+# print(type(num_file))
+# print("Calibration images :"+num_file)
 
 pattern_points = np.zeros( (np.prod(pattern_size), 3), np.float32 ) #チェスボード（X,Y,Z）座標の指定 (Z=0)
 pattern_points[:,:2] = np.indices(pattern_size).T.reshape(-1, 2)
